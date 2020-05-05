@@ -13,6 +13,7 @@ config.read("C:/NovaOS/Modules/NexusPhoneBot/config.ini")
 
 class SelectMenu:
     def MainMenu(self):
+        print("Hello This was pushed to Git")
         print(MainMenu_Icon)
         print(MenuSelection["Main_1"])
         print(MenuSelection["Main_2"])
