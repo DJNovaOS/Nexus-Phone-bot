@@ -1,7 +1,9 @@
 import twilio
 from twilio.rest import Client
-from Placeholders import MainMenu_Icon, BetaMenu_Icon, VoiceMenu_Icon, SMSMenu_Icon, CustomMenu_Icon, CloseSys,SettingsMenu_Icon, ip
-from Placeholders import MenuSelection
+from Placeholders import MainMenu_Icon, BetaMenu_Icon, VoiceMenu_Icon, SMSMenu_Icon, CustomMenu_Icon, CloseSys,SettingsMenu_Icon, ip, MenuSelection, CN, CAC,CD,SearchNumber
+from CrashManager import crash
+from emoji import emoji
+import random
 import sys
 import os
 import configparser
@@ -12,6 +14,7 @@ config.read("C:/NovaOS/Modules/NexusPhoneBot/config.ini")
 
 
 class SelectMenu:
+    os.system('cls' if os.name == 'nt' else 'clear')
     def MainMenu(self):
         print(MainMenu_Icon)
         print(MenuSelection["Main_1"])
@@ -27,12 +30,17 @@ class SelectMenu:
         elif user == '2':
             SelectMenu().VoiceMenu()
         elif user == '3':
-            SelectMenu().CustomMenu()
+            SelectMenu().FunMenu()
         elif user == '4':
             print("\nBETA MENU SELECTED ?")
             SelectMenu().BetaMenu()
         elif user == '5':
-            SearchNumber()
+            ACCOUNT_SID = config.get('Settings', 'Account-SID')
+            AUTH_TOKEN = config.get('Settings', 'Auth-Token')
+            num = ''
+            Status = SearchNumber(num, ACCOUNT_SID, AUTH_TOKEN)
+            time.sleep(3)
+            SelectMenu().MainMenu()
         elif user == '6':
             SelectMenu().SettingsMenu()
         elif user == '7':
@@ -53,15 +61,14 @@ class SelectMenu:
         print(MenuSelection["SMS_1"])
         print(MenuSelection["SMS_2"])
         print(MenuSelection["SMS_3"])
-        print(MenuSelection["SMS_4"])
         print(MenuSelection["SMS_back"])
         user = input("> ")
         if user == '1':
-            SMS().SA(6, 10, 0)
+            SMS().SA(6, 10)
         elif user == '2':
-            SMS().SA(2, 20, 0)
+            SMS().SA(2, 20)
         elif user == '3':
-            SMS().ASA(0)
+            SMS().Custom()
         elif user == '4':
             pass
         elif user.lower() == 'b':
@@ -79,17 +86,14 @@ class SelectMenu:
         print(MenuSelection["Voice_1"])
         print(MenuSelection["Voice_2"])
         print(MenuSelection["Voice_3"])
-        print(MenuSelection["Voice_4"])
         print(MenuSelection["Voice_back"])
         user = input("> ")
         if user == '1':
-            Voice().BVA(5, 10, 0)
+            Voice().VA(5, 10)
         elif user == '2':
-            Voice().AVA(2, 30, 0)
+            Voice().VA(2, 30)
         elif user == '3':
-            Voice().MA(10, 3, 0)
-        elif user == '4':
-            pass
+            Voice().Custom()
         elif user.lower() == 'b':
             os.system('cls' if os.name == 'nt' else 'clear')
             SelectMenu().MainMenu()
@@ -99,17 +103,23 @@ class SelectMenu:
             os.system('cls' if os.name == 'nt' else 'clear')
             SelectMenu().SMSMenu()
 
-    def CustomMenu(self):
+    def FunMenu(self):
         os.system('cls' if os.name == 'nt' else 'clear')
         print(CustomMenu_Icon)
-        print(MenuSelection["Custom_1"])
-        print(MenuSelection["Custom_2"])
-        print(MenuSelection["Custom_back"])
+        print(MenuSelection["Fun_1"])
+        print(MenuSelection["Fun_2"])
+        print(MenuSelection["Fun_3"])
+        print(MenuSelection["Fun_4"])
+        print(MenuSelection["Fun_back"])
         user = input("> ")
         if user == '1':
-            Voice().Custom(0)
+            Fun().EA2(4,10)
         elif user == '2':
-            SMS().Custom(0)
+            Fun().MA(60,2)
+        elif user == '3':
+            SelectMenu().MainMenu()
+        elif user == '4':
+            Fun().MMA()
         elif user.lower() == 'b':
             os.system('cls' if os.name == 'nt' else 'clear')
             SelectMenu().MainMenu()
@@ -129,13 +139,13 @@ class SelectMenu:
         print(MenuSelection["Beta_back"])
         user = input("> ")
         if user == '1':
-            pass
+            SelectMenu().MainMenu()
         elif user == '2':
-            pass
+            SelectMenu().MainMenu()
         elif user == '3':
-            pass
+            SelectMenu().MainMenu()
         elif user == '4':
-            pass
+            SelectMenu().MainMenu()
         elif user.lower() == 'b':
             os.system('cls' if os.name == 'nt' else 'clear')
             SelectMenu().MainMenu()
@@ -172,190 +182,96 @@ class SelectMenu:
             os.system('cls' if os.name == 'nt' else 'clear')
             SelectMenu().SMSMenu()
 
-
 class Voice:
-    def VA(self, delay, attack_count, count):
+    def VA(self,delay, attack_count): #Voice Attack (VA)
         SysTime = time.ctime()
         ACCOUNT_SID = config.get('Settings', 'Account-SID')
         AUTH_TOKEN = config.get('Settings', 'Auth-Token')
         Voice_link = config.get('Settings', 'Voice-link')
         Attacker = config.get('Settings', 'Bot-Number')
         victim = ''
-        while victim is not int:
-            try:
-                victim = int(input('Nexus > Victims Number: '))
-                if len(str(victim)) == 10:
-                    print(f"Nexus > Number is valid | {victim}")
-                    break
-                else:
-                    print(f"Nexus > Number is Invalid | {victim}")
-            except ValueError:
-                print("Nexus > Must be a number and contain no numbers or symbol's")
-
+        victim = CN(victim)
         print("Nexus > Get Ready to Attack | Number Valid")
-        print("<---------[Attack Information]-------->\n"
+        print("<---------[Attack: Voice]-------->\n"
               f"[*] Bots Number    | ({Attacker})\n"
               f"[*] Victims Number | ({victim})\n"
               f"[*] Attack Delay   | ({delay}) seconds\n"
               f"[*] Attack Count   | ({attack_count}) Attacks\n"
-              "<------------------------------------->")
-        user = input("If all is correct Press [Y] if not press [N]\n> ").lower()
+              "<-------------------------------------->")
+        user = input("Nexus > Ready to Attack ?\n[Y] - Start Attack\n[N] - Change settings\n> ").lower()
         if user == 'y':
-            os.system('cls' if os.name == 'nt' else 'clear')
-            print(f"Nexus > Started Attack | {SysTime}")
             try:
                 client = Client(ACCOUNT_SID, AUTH_TOKEN)
-                while count < attack_count:
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print(f"Nexus > Started Attack | {SysTime}")
+                for i in range(attack_count):
+                    i += 1
                     client.calls.create(
                         to=victim,
                         from_=Attacker,
                         url=Voice_link
                     )
-                    count += 1
+                    print(f"Nexus > Bot Made a Call to: [{victim}] from [{Attacker})] | ({i}/{attack_count})")
                     time.sleep(delay)
-                    print(f"Nexus > Bot Made a Call to: [{victim}] from [{Attacker})] | ({count}/{attack_count})")
-                    time.sleep(delay)
-                print(f"Nexus > Attack Over ! | [{count}/{attack_count}]")
-                time.sleep(3)
+                print(f"Nexus > Attack Over ! | [{i}/{attack_count}]")
+                time.sleep(2.5)
                 os.system('cls' if os.name == 'nt' else 'clear')
                 SelectMenu().MainMenu()
             except Exception as error:
-                print(error)
+                crash().Create_Log(error)
         elif user in CloseSys:
-            Voice().BVA(5, 10, 0)
+            Voice().VA(5,10,0)
         else:
-            print("Nexus > Not an option")
-            time.sleep(3)
-            SelectMenu().VoiceMenu()
-
-    def MA(self, delay, attack_count, count):
-        SysTime = time.ctime()
-        ACCOUNT_SID = config.get('Settings', 'Account-SID')
-        AUTH_TOKEN = config.get('Settings', 'Auth-Token')
-        Attacker = config.get('Settings', 'Bot-Number')
-        Music_Link = config.get('Settings', 'Music-Link')
-        victim = ''
-        while victim is not int:
-            try:
-                victim = int(input('Nexus > Victims Number: '))
-                if len(str(victim)) == 10:
-                    print(f"Nexus > Number is valid | {victim}")
-                    break
-                else:
-                    print(f"Nexus > Number is Invalid | {victim}")
-            except ValueError:
-                print("Nexus > Must be a number and contain no letters or symbol's")
-
-        print("Nexus > Get Ready to Attack | Number Valid")
-        print("WARNING - This is an intense attack please use default settings.")
-        time.sleep(2)
-        print("<---------[Attack Information]-------->\n"
-              f"[*] Bots Number    | ({Attacker})\n"
-              f"[*] Victims Number | ({victim})\n"
-              f"[*] Attack Delay   | ({delay}) seconds\n"
-              f"[*] Attack Count   | ({attack_count}) Attacks\n"
-              "<------------------------------------->")
-        user = input("If all is correct Press [Y] if not press [N]\n> ").lower()
-        if user == 'y':
+            print("Nexus > Not an Option")
+            time.sleep(2.5)
             os.system('cls' if os.name == 'nt' else 'clear')
-            print(f"Nexus > Started Attack | {SysTime}")
-            try:
-                client = Client(ACCOUNT_SID, AUTH_TOKEN)
-                while count < attack_count:
-                    client.calls.create(
-                        to=victim,
-                        from_=Attacker,
-                        url=Music_Link
-                    )
-                    count += 1
-                    print(f"Nexus > Bot Made a Call to: [{victim}] from [{Attacker})] | ({count}/{attack_count})")
-                    time.sleep(delay)
-                print(f"Nexus > Attack Over ! | [{count}/{attack_count}]")
-                time.sleep(3)
-                os.system('cls' if os.name == 'nt' else 'clear')
-                SelectMenu().MainMenu()
-            except Exception as error:
-                print(error)
-        elif user in CloseSys:
-            Voice().MA(10, 3, 0)
-        else:
-            print("Nexus > Not an option")
-            time.sleep(3)
             SelectMenu().VoiceMenu()
 
-    def MMA(self):  # Mad Max Attack (MMA)
-        pass
-
-
-    def Custom(self, count):
+    def Custom(self):
         SysTime = time.ctime()
         ACCOUNT_SID = config.get('Settings', 'Account-SID')
         AUTH_TOKEN = config.get('Settings', 'Auth-Token')
-        Voice_link = config.get('Settings', 'Voice-link')
         Attacker = config.get('Settings', 'Bot-Number')
         delay = ''
         attack_count = ''
         victim = ''
-        while delay is not int:
-            try:
-                delay = int(input('Nexus > Delay in seconds: '))
-                if delay <= 5:
-                    print("[X] Warning [X] This is a very Low delay recommended (10)")
-                print("Nexus > Number Accepted (!)")
-                break
-            except ValueError:
-                print("Nexus > Must be an int/Whole number")
 
-        while attack_count is not int:
-            try:
-                attack_count = int(input('Nexus > Number of Attacks: '))
-                if attack_count >= 70:
-                    print(f"[X] Warning [X] You are about to send ({attack_count}) recommended (30)")
-                break
-            except ValueError:
-                print("Nexus > Must be an int/Whole number")
-
-        while victim is not int:
-            try:
-                victim = int(input('Nexus > Victims Number: '))
-                if len(str(victim)) == 10:
-                    print(f"Nexus > Number is valid | {victim}")
-                    break
-                else:
-                    print(f"Nexus > Number is Invalid | {victim}")
-            except ValueError:
-                print("Nexus > Must be a number and contain no numbers or symbol's")
-
+        victim = CN(victim)
+        attack_count = CAC(attack_count)
+        delay = CD(delay)
+        Voice_link = input("Please enter a Voice Link: ")
         print("Nexus > Get Ready to Attack | Number Valid")
-        print("<---------[Attack Information]-------->\n"
+        print("<---------[Attack: Custom Voice]-------->\n"
               f"[*] Bots Number    | ({Attacker})\n"
               f"[*] Victims Number | ({victim})\n"
               f"[*] Attack Delay   | ({delay}) seconds\n"
               f"[*] Attack Count   | ({attack_count}) Attacks\n"
+              f"[*] Voice Link     | ({Voice_link})"
               f"[*] System IP      | ({ip})\n"
               f"[*] VoIP server    | (False/Null)\n"
               "<------------------------------------->")
-        user = input("If all is correct Press [Y] if not press [N]\n> ").lower()
+        user = input("Nexus > Start Attack ?\n[Y] - Start Attack\n[N] - Change Settings\n> ").lower()
         if user == 'y':
             os.system('cls' if os.name == 'nt' else 'clear')
             print(f"Nexus > Started Attack | {SysTime}")
             try:
                 client = Client(ACCOUNT_SID, AUTH_TOKEN)
-                while count < attack_count:
+                i: int
+                for i in range(attack_count):
+                    i += 1
                     client.calls.create(
                         to=victim,
                         from_=Attacker,
                         url=Voice_link
                     )
-                    count += 1
-                    print(f"Nexus > Bot Made a Call to: [{victim}] from [{Attacker})] | ({count}/{attack_count}) | (IP: {ip})")
+                    print(f"Nexus > Bot Made a Call to: [{victim}] from [{Attacker})] | ({i}/{attack_count}) | (IP: {ip})")
                     time.sleep(delay)
-                print(f"Nexus > Attack Over ! | [{count}/{attack_count}]")
+                print(f"Nexus > Attack Over ! | [{i}/{attack_count}]")
                 time.sleep(3)
                 os.system('cls' if os.name == 'nt' else 'clear')
                 SelectMenu().MainMenu()
             except Exception as error:
-                print(error)
+                crash.Create_Log(error)
         elif user in CloseSys:
             Voice().Custom(0)
         else:
@@ -363,249 +279,260 @@ class Voice:
             time.sleep(3)
             SelectMenu().VoiceMenu()
 
-
 class SMS:
-    def SA(self, delay, attack_count, count):
+    def SA(self, delay, attack_count): #SMS Attack Basic (SA)
         SysTime = time.ctime()
         ACCOUNT_SID = config.get('Settings', 'Account-SID')
         AUTH_TOKEN = config.get('Settings', 'Auth-Token')
         Attacker = config.get('Settings', 'Bot-Number')
         victim = ''
-        while victim is not int:
-            try:
-                victim = int(input('Nexus > Victims Number: '))
-                if len(str(victim)) == 10:
-                    print(f"Nexus > Number is valid | {victim}")
-                    break
-                else:
-                    print(f"Nexus > Number is Invalid | {victim}")
-            except ValueError:
-                print("Nexus > Must be a number and contain no letters or symbol's")
+        victim = CN(victim)
 
-        print("Nexus > Get Ready to Attack | Number Valid")
-        print("<---------[Attack: Basic SMS]-------->\n"
+        print("Nexus > Get Ready to Attack | Settings Valid")
+        print("<---------[Attack: SMS]-------->\n"
               f"[*] Bots Number    | ({Attacker})\n"
               f"[*] Victims Number | ({victim})\n"
               f"[*] Attack Delay   | ({delay}) seconds\n"
               f"[*] Attack Count   | ({attack_count}) Attacks\n"
               "<------------------------------------->")
-        user = input("If all is correct Press [Y] if not press [N]\n> ").lower()
+        user = input("Nexus > Ready to Attack ?\n[Y] - Start Attack\n[N] - Change settings\n> ").lower()
         if user == 'y':
-            client = Client(ACCOUNT_SID, AUTH_TOKEN)
-            os.system('cls' if os.name == 'nt' else 'clear')
-            print(f"Nexus > Started Attack | {SysTime}")
-            while count < attack_count:
-                try:
-                    client.messages.create(
-                        to=victim,
-                        from_=Attacker,
-                        body="Test"
-                    )
-                    count += 1
-                    print(f"Nexus > Bot Made a Call to: [{victim}] from [{Attacker})] | ({count}/{attack_count})")
-                    time.sleep(delay)
-                except twilio.rest.TwilioException:
-                    print(f"Nexus > Your Number has been blocked by the user. | {victim}")
-                    time.sleep(2)
-                    SelectMenu().SMSMenu()
-
-    def CSA(self, count): # Custom SMS Attack - ASM
-        SysTime = time.ctime()
-        ACCOUNT_SID = config.get('Settings', 'Account-SID')
-        AUTH_TOKEN = config.get('Settings', 'Auth-Token')
-        Attacker = config.get('Settings', 'Bot-Number')
-        victim = ''
-        delay = input("Please enter a delay in seconds: ")
-        attack_count = input("Please enter number of attacks: ")
-        response = input("Please enter a custom message: ")
-        while victim is not int:
             try:
-                victim = int(input('Nexus > Victims Number: '))
-                if len(str(victim)) == 10:
-                    print(f"Nexus > Number is valid | {victim}")
-                    break
-                else:
-                    print(f"Nexus > Number is Invalid | {victim}")
-            except ValueError:
-                print("Nexus > Must be a number and contain no letters or symbol's")
+                client = Client(ACCOUNT_SID, AUTH_TOKEN)
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print(f"Nexus > Started Attack | {SysTime}")
+                for i in range(attack_count):
+                    try:
+                        i += 1
+                        client.messages.create(
+                            to=victim,
+                            from_=Attacker,
+                            body='Your phone has been targeted by Nexus 3.0.1 🤬'
+                        )
+                        print(f"Nexus > Bot send a message: [{victim}] from [{Attacker})] | ({i}/{attack_count})")
+                        time.sleep(delay)
+                    except twilio.rest.TwilioException:
+                        print(f"Nexus > Your Number has been blocked by the user. | {victim}")
+                        time.sleep(2)
+                        SelectMenu().SMSMenu()
+            except Exception as error:
+                crash().Create_Log(error)
 
-        print("Nexus > Get Ready to Attack | Number Valid")
-        print("<---------[Attack: Basic SMS]-------->\n"
-              f"[*] Bots Number    | ({Attacker})\n"
-              f"[*] Victims Number | ({victim})\n"
-              f"[*] Attack Delay   | ({delay}) seconds\n"
-              f"[*] Attack Count   | ({attack_count}) Attacks\n"
-              f'[*] Attack Response| ("{response}")'
-              "<------------------------------------->")
-        user = input("If all is correct Press [Y] if not press [N] | Press [Enter] to Main Menu\n> ").lower()
-        if user.lower()== 'y':
-            client = Client(ACCOUNT_SID, AUTH_TOKEN)
-            os.system('cls' if os.name == 'nt' else 'clear')
-            print(f"Nexus > Started Attack | {SysTime}")
-            while int(count) < attack_count:
-                try:
-                    client.messages.create(
-                        to=victim,
-                        from_=Attacker,
-                        body=response
-                    )
-                    count += 1
-                    print(f"Nexus > Bot Made a Call to: [{victim}] from [{Attacker})] | ({count}/{attack_count})")
-                    time.sleep(int(delay))
-                except twilio.rest.TwilioException:
-                    print(f"Nexus > Your Number has been blocked by the user. | {victim}")
-                    time.sleep(2)
-                    SelectMenu().SMSMenu()
-        elif user in CloseSys:
-            print("Nexus > Going back")
-            time.sleep(1)
-            os.system('cls' if os.name == 'nt' else 'clear')
-            SMS().ASA(0)
-        else:
-            print("Nexus > Going to Main Menu |")
-            time.sleep(1)
+            print(f"Nexus > Attack Over ! | [{i}/{attack_count}]")
+            time.sleep(2.5)
             os.system('cls' if os.name == 'nt' else 'clear')
             SelectMenu().MainMenu()
-    def Custom(self, count):
+
+        elif user in CloseSys:
+            Voice().Custom(0)
+        else:
+            print("Nexus > Not an option")
+            time.sleep(3)
+            SelectMenu().SMSMenu()
+
+
+
+
+
+    def Custom(self):
         SysTime = time.ctime()
         ACCOUNT_SID = config.get('Settings', 'Account-SID')
         AUTH_TOKEN = config.get('Settings', 'Auth-Token')
-        Voice_link = config.get('Settings', 'Voice-link')
         Attacker = config.get('Settings', 'Bot-Number')
         delay = ''
         attack_count = ''
         victim = ''
-        while delay is not int:
-            try:
-                delay = int(input('Nexus > Delay in seconds: '))
-                if delay <= 5:
-                    print("[X] Warning [X] This is a very Low delay recommended (10)")
-                print("Nexus > Number Accepted (!)")
-                break
-            except ValueError:
-                print("Nexus > Must be an int/Whole number")
 
-        while attack_count is not int:
-            try:
-                attack_count = int(input('Nexus > Number of Attacks: '))
-                if attack_count >= 70:
-                    print(f"[X] Warning [X] You are about to send ({attack_count}) recommended (30)")
-                break
-            except ValueError:
-                print("Nexus > Must be an int/Whole number")
-
-        while victim is not int:
-            try:
-                victim = int(input('Nexus > Victims Number: '))
-                if len(str(victim)) == 10:
-                    print(f"Nexus > Number is valid | {victim}")
-                    break
-                else:
-                    print(f"Nexus > Number is Invalid | {victim}")
-            except ValueError:
-                print("Nexus > Must be a number and contain no numbers or symbol's")
-
-        message = input("Enter Custom Message: ")
-
+        victim = CN(victim)
+        attack_count = CAC(attack_count)
+        delay = CD(delay)
+        message = input("Please enter a message: ")
         print("Nexus > Get Ready to Attack | Number Valid")
-        print("<---------[Attack Information]-------->\n"
+        print("<---------[Attack: Custom SMS]-------->\n"
               f"[*] Bots Number    | ({Attacker})\n"
               f"[*] Victims Number | ({victim})\n"
               f"[*] Attack Delay   | ({delay}) seconds\n"
               f"[*] Attack Count   | ({attack_count}) Attacks\n"
-              f"[*] Message        | ({message})\n"
+              f"[*] Message        | ({message})"
               f"[*] System IP      | ({ip})\n"
               f"[*] VoIP server    | (False/Null)\n"
               "<------------------------------------->")
-        user = input("Nexus > Ready to Attack ?\n[Y] - Start Attack\n[N] - Change Settings\n> ").lower()
+        user = input("Nexus > Start Attack ?\n[Y] - Start Attack\n[N] - Change Settings\n> ").lower()
         if user == 'y':
             os.system('cls' if os.name == 'nt' else 'clear')
             print(f"Nexus > Started Attack | {SysTime}")
             try:
                 client = Client(ACCOUNT_SID, AUTH_TOKEN)
-                while count < attack_count:
+                i: int
+                for i in range(attack_count):
+                    i += 1
                     client.messages.create(
                         to=victim,
                         from_=Attacker,
                         body=message
                     )
-                    count += 1
-                    print(f"Nexus > Bot Made a Call to: [{victim}] from [{Attacker})] | ({count}/{attack_count}) | (IP: {ip})")
+                    print(f"Nexus > Bot Made a Call to: [{victim}] from [{Attacker})] | ({i}/{attack_count}) | (IP: {ip})")
                     time.sleep(delay)
-                print(f"Nexus > Attack Over ! | [{count}/{attack_count}]")
+                print(f"Nexus > Attack Over ! | [{i}/{attack_count}]")
                 time.sleep(3)
                 os.system('cls' if os.name == 'nt' else 'clear')
                 SelectMenu().MainMenu()
             except Exception as error:
-                print(error)
+                crash.Create_Log(error)
         elif user in CloseSys:
             Voice().Custom(0)
         else:
-            print("Nexus > This is not an option.")
+            print("Nexus > Not an option")
             time.sleep(3)
-            SelectMenu().VoiceMenu()
+            SelectMenu().SMSMenu()
 
-
-class Music:
-    def MA(self, delay, attack_count, count):
+class Fun:
+    def EA2(self,delay, attack_count):
         SysTime = time.ctime()
         ACCOUNT_SID = config.get('Settings', 'Account-SID')
         AUTH_TOKEN = config.get('Settings', 'Auth-Token')
         Attacker = config.get('Settings', 'Bot-Number')
-        Music_Link = config.get('Settings', 'Music-Link')
         victim = ''
-        while victim is not int:
-            try:
-                victim = int(input('Nexus > Victims Number: '))
-                if len(str(victim)) == 10:
-                    print(f"Nexus > Number is valid | {victim}")
-                    break
-                else:
-                    print(f"Nexus > Number is Invalid | {victim}")
-            except ValueError:
-                print("Nexus > Must be a number and contain no letters or symbol's")
+        victim = CN(victim)
 
-        print("Nexus > Get Ready to Attack | Number Valid")
-        print("<---------[Attack: Basic SMS]-------->\n"
+        print("Nexus > Get Ready to Attack | Settings Valid")
+        print("<---------[Attack: Emoji v2]-------->\n"
               f"[*] Bots Number    | ({Attacker})\n"
               f"[*] Victims Number | ({victim})\n"
               f"[*] Attack Delay   | ({delay}) seconds\n"
               f"[*] Attack Count   | ({attack_count}) Attacks\n"
+              f"[*] Fist Message   | ({emoji[0]})\n"
               "<------------------------------------->")
-        user = input("If all is correct Press [Y] if not press [N] | Press [Enter] to go back\n> ").lower()
+        user = input("Nexus > Ready to Attack ?\n[Y] - Start Attack\n[N] - Change settings\n> ").lower()
         if user == 'y':
-            client = Client(ACCOUNT_SID, AUTH_TOKEN)
             os.system('cls' if os.name == 'nt' else 'clear')
             print(f"Nexus > Started Attack | {SysTime}")
-            while count < attack_count:
-                try:
+            try:
+                client = Client(ACCOUNT_SID, AUTH_TOKEN)
+                for i in range(attack_count):
+                    ID = random.randint(0,33)
+                    i += 1
                     client.messages.create(
                         to=victim,
                         from_=Attacker,
-                        body="Test"
+                        body=emoji[ID]
                     )
-                    count += 1
-                    print(f"Nexus > Bot Made a Call to: [{victim}] from [{Attacker})] | ({count}/{attack_count})")
+                    print(f"Nexus > Bot Made a Call to: [{victim}] from [{Attacker})] | ({i}/{attack_count})")
                     time.sleep(delay)
-                except twilio.rest.TwilioException:
-                    print(f"Nexus > Your Number has been blocked by the user. | {victim}")
-                    time.sleep(2)
-                    SelectMenu().SMSMenu()
+                print(f"Nexus > Attack Over ! | [{i}/{attack_count}]")
+                time.sleep(3)
+                os.system('cls' if os.name == 'nt' else 'clear')
+                SelectMenu().MainMenu()
+            except Exception as error:
+                crash.Create_Log(error)
+
         elif user in CloseSys:
-            Music().BMA(15, 3, 0)
+            Fun().EA2(4,10)
+
         else:
             print("Nexus > Not an option")
             time.sleep(3)
+            SelectMenu().FunMenu()
+
+    def MA(self, delay, attack_count): #Music Attack - (MA)
+        SysTime = time.ctime()
+        ACCOUNT_SID = config.get('Settings', 'Account-SID')
+        AUTH_TOKEN = config.get('Settings', 'Auth-Token')
+        Attacker = config.get('Settings', 'Bot-Number')
+        Music_link = config.get('Settings', 'Music-Link')
+        victim = ''
+        victim = CN(victim)
+        print("Nexus > Get Ready to Attack | Number Valid")
+        print("<---------[Attack: Music Voice]-------->\n"
+              f"[*] Bots Number    | ({Attacker})\n"
+              f"[*] Victims Number | ({victim})\n"
+              f"[*] Attack Delay   | ({delay}) seconds\n"
+              f"[*] Attack Count   | ({attack_count}) Attacks\n"
+              f"[*] Music Link     | ({Music_link})\n"
+              "<-------------------------------------->")
+        user = input("Nexus > Ready to Attack ?\n[Y] - Start Attack\n[N] - Change settings\n> ").lower()
+        if user == 'y':
+            try:
+                client = Client(ACCOUNT_SID, AUTH_TOKEN)
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print("[X] - Warning because this is a video it will send every 1 minute")
+                print(f"Nexus > Started Attack | {SysTime}")
+                for i in range(attack_count):
+                    i += 1
+                    client.calls.create(
+                        to=victim,
+                        from_=Attacker,
+                        url=Music_link
+                    )
+                    print(f"Nexus > Bot Made a Call to: [{victim}] from [{Attacker})] | ({i}/{attack_count})")
+                    time.sleep(delay)
+                print(f"Nexus > Attack Over ! | [{i}/{attack_count}]")
+                time.sleep(2.5)
+                os.system('cls' if os.name == 'nt' else 'clear')
+                SelectMenu().MainMenu()
+            except Exception as error:
+                crash().Create_Log(error)
+        elif user in CloseSys:
+            Fun().MA(60,3)
+        else:
+            print("Nexus > Not an Option")
+            time.sleep(2.5)
+            os.system('cls' if os.name == 'nt' else 'clear')
             SelectMenu().VoiceMenu()
 
 
-def SearchNumber():
-    print("Waring this will charge your Twilio account 15 cents per lookup.")
-    print("Same rates apply to making bot calls.")
-    user = input("Would you like to search a number [Y/N]\n> ")
-    if user == 'y'.lower():
-        print("Ok checking number")
-    else:
-        os.system('cls' if os.name == 'nt' else 'clear')
-        print("Ok going back ?")
-        SelectMenu().MainMenu()
+    def MMA(self, delay, attack_count): #Mad Max Attack - (MMA)
+        SysTime = time.ctime()
+        ACCOUNT_SID = config.get('Settings', 'Account-SID')
+        AUTH_TOKEN = config.get('Settings', 'Auth-Token')
+        Attacker = config.get('Settings', 'Bot-Number')
+        Music_link = config.get('Settings', 'Music-Link')
+        Voice_link = config.get('Settings', 'Voice-link')
+        victim = ''
+        victim = CN(victim)
+        message = 'Your phone has been targeted by Nexus 3.0.1 🤬'
+        print("Nexus > Get Ready to Attack | Number Valid")
+        print("<------------[Attack: Mad Max]----------->\n"
+              f"[*] Bots Number    | ({Attacker})\n"
+              f"[*] Victims Number | ({victim})\n"
+              f"[*] Attack Delay   | ({delay}) seconds\n"
+              f"[*] Attack Count   | ({attack_count}) Attacks\n"
+              f"[*] System IP      | ({ip})\n"
+              f"[*] VoIP server    | (False/Null)\n"
+              "<---------[Attack links/messages]-------->\n"
+              f"[*] Music Link     | ({Music_link})\n"
+              f"[*] Voice Link     | ({Voice_link})\n"
+              f"[*] System Message | ({message})\n"
+              f"[*] Emoji message  | ({emoji[0]})\n"
+              "<----------------------------------------->")
+        user = input("Nexus > Ready to Attack ?\n[Y] - Start Attack\n[N] - Change settings\n> ").lower()
+        if user == 'y':
+            try:
+                client = Client(ACCOUNT_SID, AUTH_TOKEN)
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print("[X] WARNING > This is a VERY intense attack. Use with care No custom mode available [*]")
+                time.sleep(6)
+                print(f"Nexus > Started Attack | {SysTime}")
+                for i in range(attack_count):
+                    i += 1
+                    ID = random.randint(0, 33)
+                    client.calls.create(to=victim, from_=Attacker, url=Music_link)
+                    client.calls.create(to=victim, from_=Attacker, url=Voice_link)
+                    client.messages.create(to=victim, from_=Attacker, body=message)
+                    client.messages.create(to=victim, from_=Attacker, body=emoji[ID])
+                    print(f"Nexus > Bot sent a Message/Call to: [{victim}] from [{Attacker})] | ({i}/{attack_count}) | (IP: {ip})")
+                    time.sleep(delay)
+
+                print(f"Nexus > Attack Over ! | [{i}/{attack_count}]")
+                time.sleep(2.5)
+                os.system('cls' if os.name == 'nt' else 'clear')
+                SelectMenu().MainMenu()
+            except Exception as error:
+                crash().Create_Log(error)
+        elif user in CloseSys:
+            Fun().MMA(5,4)
+        else:
+            print("Nexus > Not an Option")
+            time.sleep(2.5)
+            os.system('cls' if os.name == 'nt' else 'clear')
+            SelectMenu().FunMenu()

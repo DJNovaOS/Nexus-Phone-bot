@@ -2,6 +2,8 @@ import platform
 import os
 import time
 import uuid
+from twilio.rest import Client
+import json
 # import time
 import datetime
 import socket
@@ -29,10 +31,7 @@ conf_path = "C:/NovaOS/Modules/NexusPhoneBot/config.ini"
 database_path = "C:/NovaOS/Modules/NexusPhoneBot/database"
 log = "C:/NovaOS/Modules/NexusPhoneBot/Logs/Log.txt"
 img_path = "C:/NovaOS/Modules/NexusPhoneBot/img"
-
 database_file_path = "C:/NovaOS/Modules/NexusPhoneBot/database/System.db"
-log_path = "C:/NovaOS/Modules/NexusPhoneBot/Logs"
-
 CloseSys = ['e', 'EXIT', 'exit', 'E', 'exi', 'end', 'exi', 'b', 'B', 'BACK', 'n', 'N']
 
 NetworkError = ['<urlopen error [Errno 11001] getaddrinfo failed>']
@@ -40,7 +39,7 @@ NetworkError = ['<urlopen error [Errno 11001] getaddrinfo failed>']
 MenuSelection = {
     "Main_1": "[1] - SMS Attacks",
     "Main_2": "[2] - Voice Attacks",
-    "Main_3": "[3] - Custom Attacks",
+    "Main_3": "[3] - Fun Attacks",
     "Main_4": "[4] - Beta Attacks",
     "Main_5": "[5] - Number Search",
     "Main_6": "[6] - Settings/Options",
@@ -48,20 +47,19 @@ MenuSelection = {
 
     "SMS_1": "[1] - Basic SMS Attack",
     "SMS_2": "[2] - Advanced SMS Attack",
-    "SMS_3": "[3] - Emoji Attack v2",
-    "SMS_4": "[4] - IRL Attack",
+    "SMS_3": "[3] - Custom SMS Attack",
     "SMS_back": "[B] - Back",
 
     "Voice_1": "[1] - Basic Voice Attack",
     "Voice_2": "[2] - Advanced Voice Attack",
-    "Voice_3": "[3] - Music Attack",
-    "Voice_4": "[4] - Mad Max Attack",
+    "Voice_3": "[3] - Custom Voice Attack",
     "Voice_back": "[B] - Back",
 
-    "Custom_1": "[1] - Custom Voice Attack",
-    "Custom_2": "[2] - Custom SMS Attack",
-    "Custom_3": "[3] - Custom Music Attack",
-    "Custom_back": "[B] - Back",
+    "Fun_1": "[1] - Emoji Attack v2",
+    "Fun_2": "[2] - Music Attack",
+    "Fun_3": "[3] - IRL Attack",
+    "Fun_4": "[4] - Mad Max Attack",
+    "Fun_back": "[B] - Back",
 
     "Settings_1": "[1] - Reset Config",
     "Settings_2": "[2] - Referral Link",
@@ -76,13 +74,12 @@ MenuSelection = {
     "Beta_4": "[4] - N/A",
     "Beta_back": "[B] - Back"}
 
-
 system_path = [
     os.path.exists(file_path),
     os.path.exists(conf_path),
     os.path.exists(database_path),
     os.path.exists(database_file_path),
-    os.path.exists(log_path),
+    os.path.exists('C:/Nova/Modules/NovaPhoneBot/Logs'),
     os.path.exists(img_path)]
 
 check_help = ['h', 'Help', 'help', 'HELP', 'H']
@@ -115,7 +112,7 @@ NexusPB = f"""
    [*] Support: NovaOSTechnology.come/Support
    [*] Version: - {System_version} | Config Version - {config_version}
       ({Copy_right[1]})
-                                        
+
 """
 
 crash_logo = f"""
@@ -125,15 +122,15 @@ crash_logo = f"""
              | |\  | (_) \ V / (_| |/ ___ \ | | 
              |_| \_|\___/ \_/ \__,_/_/   \_\___|             
                (A NovaOS Technology Program)
-               
+
          Oh No the system has crashed. Those Bugs got, 
         into the wires again ! To help fix this issue 
         we created a log file ! The log can be found below
         -------------------------------------------------
-        [*] ({log_path}) 
+        [*] (C:/Nova/Modules/NovaPhoneBot/Logs) 
         [*] Support | (NovaOSTechnology.com/support)
         [*] Version | {System_version}
-        [*] {SysTime[0]} | {SysTime[1]},{SysTime[3]} | {SysTime[4]}
+        [*] {SysTime[0]} | {SysTime[1]} {SysTime[3]} | {SysTime[4]}
 """
 
 NovaAI = f"""
@@ -143,7 +140,7 @@ NovaAI = f"""
              | |\  | (_) \ V / (_| |/ ___ \ | | 
              |_| \_|\___/ \_/ \__,_/_/   \_\___|             
                (A NovaOS Technology Program)
-               
+
          Oh No the system has crashed. Those Bugs got, 
         passed the firewall! No Log file was created. 
         NovaAI has created its own log. Please contact,
@@ -156,8 +153,8 @@ NovaAI = f"""
         [*] OS: {check_os}
         [*] UUID: N/A
         [*] Conf Version: {config_version}
-        [*] {SysTime[0]} | {SysTime[1]},{SysTime[3]} | {SysTime[4]}
-        [*] Log-Path: {log_path}
+        [*] {SysTime[0]} | {SysTime[1]} {SysTime[3]} | {SysTime[4]}
+        [*] Log-Path: 'C:/Nova/Modules/NovaPhoneBot/Logs'
         [*] IP Address: {ip}
         [*] Hostname: {get_name}
         [*] voIP: False/Disabled
@@ -200,3 +197,85 @@ SettingsMenu_Icon = """
  |___/\___|\__|\__|_|_||_\__, /__/
                          |___/    
 """
+
+
+def CN(victim):  # Check Number (CN)
+    while victim is not int:
+        try:
+            victim = int(input('Nexus > Victims Number: '))
+            if len(str(victim)) == 10:
+                print(f"Nexus > Number is valid | {victim}")
+                return victim
+            else:
+                print(f"Nexus > Number is Invalid | {victim}")
+        except ValueError:
+            print("Nexus > Must be a number and contain no numbers or symbol's")
+
+
+def CD(delay):  # Check Delay (CD)
+    while delay is not int:
+        try:
+            delay = int(input('Nexus > Delay in seconds: '))
+            if delay <= 5:
+                print("[X] Warning [X] This is a very Low delay recommended (10)")
+                print("[*] Nexus > Number Accepted (!)")
+            return delay
+        except ValueError:
+            print("Nexus > Must be an int/Whole number")
+
+
+def CAC(attack_count):  # Check Attack Count (CAC)
+    while attack_count is not int:
+        try:
+            attack_count = int(input('Nexus > Number of Attacks: '))
+            if attack_count >= 70:
+                print(f"[X] Warning [X] You are about to send ({attack_count}) recommended (30)")
+                print("[*] Nexus > Number Accepted (!)")
+            return attack_count
+        except ValueError:
+            print("Nexus > Must be an int/Whole number")
+
+
+def SearchNumber(num, ACCOUNT_SID, AUTH_TOKEN):
+    while num is not int:
+        try:
+            num = input('Nexus > Enter Number to search: ')
+            if len(str(num)) == 10:
+                print(f"Nexus > Number is valid | {num}")
+                client = Client(ACCOUNT_SID, AUTH_TOKEN)
+                checkCarrier = client.lookups \
+                    .phone_numbers(num) \
+                    .fetch(type=['carrier'])
+                checkName = client.lookups \
+                    .phone_numbers(num) \
+                    .fetch(type=['caller-name'])
+                dumpCarrier = json.dumps(checkCarrier.carrier, indent=4, sort_keys=True)
+                dumpName = json.dumps(checkName.caller_name, indent=4, sort_keys=True)
+                code = checkName.country_code
+                NF = checkName.national_format
+                addon = checkName.add_ons
+                sysurl = checkName.url
+                try:
+                    if os.path.isdir('C:/NovaOS/Modules/NexusPhoneBot/Logs/'):
+                        with open('C:/NovaOS/Modules/NexusPhoneBot/Logs/NumberSearch.txt', 'a') as write:
+                            TM = time.strftime("[%a %b %d %H:%M:%S] ")
+                            write.write(TM + "\n")
+                            write.write(dumpCarrier + "\n")
+                            write.write(dumpName + "\n")
+                            write.write("------[Other Information]------\n")
+                            write.write(f"Country Code: {code}\n")
+                            write.write(f"Formatted Num: {NF}\n")
+                            write.write(f"System Addons: {addon}\n")
+                            write.write(f"System URL: {sysurl}\n")
+                            write.write("---------END---------\n\n")
+                            write.close()
+                            print(
+                                "Nexus > Search Complete a txt file has been made at:\nC:/NovaOS/Modules/NexusPhoneBot/Logs/ ")
+                        break
+                    else:
+                        os.makedirs('C:/NovaOS/Modules/NexusPhoneBot/Logs/')
+                except Exception as error:
+                    print(error)
+
+        except Exception as error:
+            print(error)

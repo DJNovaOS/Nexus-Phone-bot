@@ -3,7 +3,7 @@ import configparser
 import os
 import sqlite3
 from Placeholders import system_path
-from Placeholders import file_path, conf_path, database_path, database_file_path, log_path, img_path, Referral, auto_update, NetworkError
+from Placeholders import file_path, conf_path, database_path, database_file_path, img_path, Referral, auto_update, NetworkError
 from Placeholders import UUID
 from Placeholders import NexusPB
 from Placeholders import check_os
@@ -76,13 +76,6 @@ class system_loading:
             else:
                 print("Nexus > Creating Files | Main Root")
                 os.makedirs(file_path)
-            try:
-                if os.path.exists(log_path):
-                    print("Nexus > Files Found | Log File")
-                else:
-                    os.makedirs(log_path)
-            except Exception as e:
-                print(e)
             try:
                 if os.path.exists(img_path):
                     print("Nexus > Files Found | Img File")
@@ -169,7 +162,7 @@ class create:
                 'Auto-Update': 'False',
                 'Database': 'False',
                 'Local-Database': 'True',
-                'Log-Path': log_path,
+                'Log-Path': 'C:/NovaOS/Modules/NexusPhoneBot/Logs',
                 'Voice-Link': Voice_Link,
                 'Music-Link': Music_Link,
             }
