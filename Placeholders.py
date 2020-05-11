@@ -23,7 +23,7 @@ ip = socket.gethostbyname(get_name)
 Copy_right = ['Copyright © 2020 NovaOS',
               'Copyright © 2020 NovaOS Technology']
 
-auto_update = "https://raw.githubusercontent.com/DJNovaTech/Nexus-Phone-bot/master/Version.txt"
+auto_update = "https://raw.githubusercontent.com/DJNovaTech/Nexus-Phone-bot/3.0.1/Version.txt"
 SysTime = time.ctime().split(" ")
 
 file_path = "C:/NovaOS/Modules/NexusPhoneBot"
