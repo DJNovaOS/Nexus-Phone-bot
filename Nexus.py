@@ -47,7 +47,7 @@ class system_loading:
             time.sleep(2)
             send_request = request.urlopen(auto_update)
             read_request = str(send_request.read(), 'utf-8').split("\n")
-            if read_request[0] == '3.0':
+            if read_request[0] == '3.0.1':
                 os.system('cls')
                 print(f"[#] No updates found. System is Running v{sys_version}")
                 print(f"[*] UUID: {UUID}")
