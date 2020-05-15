@@ -6,247 +6,52 @@
     (A NovaOS Technology program)
   Copyright © 2018-2020 NovaOS Technology
 ---------------------------------------
-
-Update logs:
-
-Version: Alpha 4
-Release: 8/1/18
-----------------
-- Added emoji Attack
-- Added sms(Text message) attack added
-- changed delays in simple call attack
-- changed delays in simple sms attack
-- Added custom call attacks
-- Released call bot, will work on all numbers
-- Network standard 1 updated/create
-
-Version: Alpha 5
-Release: 9/1/18
-----------------
-- Redesign of code. (Classes)
-- Added config options.
-- Added single message sms attack.
-- Added new config files to store Account key and SID.
-- Added new support for linux and Mac Systems.
-- Released custom and normal call attack modules.
-- Beta testing phising links for Google, Instagram, and more.
-- Re-branding System (Nebula)
-- Implemented the use of config.ini all vars stored there.
-- Finished file creating process
-- Fixed all found bugs with start system.
-- converting to Network standard v2
-
-Version: Alpha 6
-Release: 10/20/18
-----------------
-- Final Alpha version
-- working on phising attacks
-- Working on music attacks
-- working on emoji attack v2
-- Special char attacks
-- Added more voice link options
-- refined code again
-- Getting reports of errors when Not connected to internet
-- Redesigning pages
-- Working on system load speed. mostly on loading system
-- Account SID is now a standard placeholder
-- Auth token is now a standard placeholder
-- Updated all attacks to Network standard v2 (Safer and will run attacks faster)
-
-Version: 1.0
-Release: 11/1/18
-----------------
-- First stable release
-- Fixed Many out standing bugs
-
-Version: 2.0
-Release: 12/16/19
-----------------
-- Redesign of code and functions
-- Added new log Manager, The system will no longer crash yet safely close the program and generate a log
-- Added new LoadManager from NovaManager, System Starts 10x faster than before as well can check and make sure all files are there before starting.
-- Added new length check on numbers when prompted to add the bots number. If input is NOT an integer or number system will reject input on startup.
-- Added new system settings page. You can reset and delete files here.
-- Added new changMenu function as well select_menu class to speed up the switch between windows.
-- Added support for online database, connect a cloud service from AWS,Digital Ocean or any other 3rd party service.
-- Added support for local database and config.
-- Added Username and passwords are now hashed when placed in the local or Online database as well when placed in config and decrypted when needed.
-- Added new system for grabbing emoji's, they are now stored in a folder and sent from there to prevent lag in Placeholders.
-- Added new emoji file for System. This makes it so users will no longer lag or need to interact with emoji's like they did in version 1
-- Added Close System function to allow the system to close and not just crash and or close
-- Added Voice_link in config.ini, Now you can change the link at any time to what you want.
-- Added new attack - IRL attack - System will send a list of messages acting as if its a real person.
-- Added new attack - Emoji Attack v2 - has been updated to send more emoji's at a faster rate as well new IOS 13 ones.
-- Added new attack - Music Attack v1 - This attack will grab music from a list of provided links and just call the users with the songs.
-
-
-- Working on Phishing pages to be sent during SMS. Please NOTE this is currently in beta and is NOT available in this build
-- Working on System Admin page. Within settings only Admins with a username and password can access this area. System restarts after leaving this mode
-- Working on sms response messenger.
-- Working on local Website Support for SMS real time message attacks
-- Working on Ngkok Support
-- Working on Flask support
-- Working on New Voice Attack - Called "Mad Max" This attack is the ultimate attack and send SMS,Emoji v1 and advanced voice attacks all at once.
-- Working on New Voice Attack - Called "Redirect Attack B1" This Attack will take a current call and redirect it to the user.
-- Working on Adding number search/lookup from in the system so you wont need to lookup numbers before attacking.
-- Working on Discord Attack/integration
-
-
-- System will now prompt and warn the user you must have a Twilio account before you load the system.
-- System no longer supports Linux or MacOS, Must download it own version will be released in version 3.0.
-- System No longer checks bot number when making attacks due to new LoadManager checking when system is created.
-- System now restarts/returns to main menu after each attack and does not just close
-- System now runs on NovaOS Tech Architecture 3
-- System will use local config by default support for local and global database coming soon.
-- System updated to NEW NovaOS Network Standard 3. A more advanced and safe network feature.
-
-
-- Changed location of run. Run is now called Menu and holds all the menu/Attack code
-- Pages have been redesigned to be less cluttered and more simple to navigate, As well small icons to show current location
-- Page interaction code has been updated and now uses a List that can be changed and updated without the need of changing names.
-
-- Fixed system crashing when not connected to internet, Now system check to see if connected before making attack.
-- Fixed a bug where system would crash when config did not exist and prevented users from loading and starting the system.
-- Fixed a bug where calls would still be made even with an invalid voice or sms link.
-- Fixed a bug where SMS message would crash and would send the messages client side but not to the actual victim.
-- Fixed a bug in the check_number where placing anything but an int would throw errors. Now the system will reject all non integer inputs.
-- Fixed a bug in start-up where system would crash when putting the system number in.
-
-- Removed Sayings Attack.
-- Removed Django support.
-
-
-Version: 2.0.1
-Release: 1/20/20
-----------------
-- * Working on System Crash when a number is blocked for SMS Attacks*
-- ** Reports of System Crashing and no log being created for the Reason "unsupported operand type(s) for +: 'TwilioRestException' and 'str'" **
-- Fixed spelling errors when creating config files.
-- Fixed System Crashing when running attacks for the first time.
-- Fixed small bugs.
-- Fixed spacing error in Emoji Attack v1
-- Reworked VCA(Voice custom attacks) and changed naming conventions.
-- Reworked Custom Attacks and removed unused count variable.
-- Added Full support for beta Attacks.
-- Added Support for Python 3.8.1.
-- Started to Update system Architecture to NovaOS Standard 4 and NovaOS Network standard 4.
-- Started to rework the code for final build.
-- Started moving beta attacks to main function.
-
-- Working on Emoji v1 Attack Not ending on count max.
-- Working on fixing return to menu bug where after attacks your NOT sent to the main menu.
-Note: * Next update will change system Architecture to NovaOS Standard 4 and NovaOS Network Standard 4 *
-
-Version: 2.0.2
-Release: 1/30/20
-----------------
-- Fixed SMS crash.
-- Fixed "unsupported operand type(s) for +: 'TwilioRestException' and 'str'" Not logging
-- Still working on system crash for "unsupported operand type(s) for +: 'TwilioRestException' and 'str'"
-- This update fixed the big bug with the TwilioResetException although the system Still crashes It will now log this
-error and close safly. before the system was ignoring the log manager and was not able to close properly. Now the system reacts accordingly.
-
-Why did this error happen:
-As of right now we are working on implementing a new check for this system. What this means is that it will display the real reason
-this is happening and not this confusing log. But this error occurs when the number your attacking types "Stop" when the SMS attack occurred.
-
-- Rework Next update
-
-Version: 2.0.3
-Release: 2/1/20
-----------------
-**NOTE: This is the most stable version and has the lest likelihood of crashing. this is due to the fact
-most if not all the problems have been removed and only basic functions work such as the following.
-- SMS Basic Attack
-- SMS Advanced Attack
-- SMS Custom Attack
-- Voice Basic Attack
-- Voice Advanced Attack
-- Voice Custom Attack
-
-All other attacks removed including Emoji v1 and MadMax
-
-- Reports of System crashing when entering settings
-- Reports of System crashing when entering beta content
-- Reports of system Still crashing when running SMS attacks
-
-- Removed Emoji Attack v1
-- Removed Emoji Attack v2
-- Removed Beta Content
-- Removed Custom Attacks
-
-- Due to Functionality restrictions updates 2.0.4 - 2.0.9 Will be skipped.
-- Updates will be delayed for the next few months as we have decided to skip version of lesser value, until reworked 3.0 is released,
-the system will only receive updates to bugs and issues and these will be within the 2.0.4 - 2.0.9 update's and will be identified as
-bug fixes or security fixes ONLY. No new content will be added in these updates. Only bugs and issues that become pressing will be fixed in these update's,
-as 3.0 will have all know bugs fixed.
-
-Version: 2.0.4
-Release: 2/28/20
-----------------
-- Fixed a few bugs
-
-
-Version: 3.0.0
-Release: N/A
-----------------
-Nexus - Phone Bot
-Created by NovaOS Technology
-[*] Name change - now the system has an official name as well add a more sleek look.
-
-- Redesign of Functions/System
-- Added int check for delay and attack count inputs in custom attacks.
-- Added Linux and MacOS Support.
-- Added LockMode - Requires a single 6 digit to log in (Whole System is locked when this mode is enabled)
-- Added ForceLogin - Taken from Legacy program NovaOS Requires a username and password to use system.
-- Added Simple Mode - Removes all GUI's from the system and allows users to only use commands(CMD listed on the site.
-- Added Information and CustomAttacks to the config as well overhauled the system for the config.
-- Added New config creation methods to allow the system to be more organized than it was before.
-- Added New __main__ name check. System checks for existing files/config. If Not all files are created.
-- Added new CrashManager/CloseManager to better help manage the system and help with system crashes.
-- Added option to set custom Voice_Link on system first load.
-- Added New NovaAI crash Integration.
-- Added New LoadManager | Taken from NovaPOS but modified to work with Nexus - Phone Bot.
-- Added New Auto-Update to the config file.
-- Added New Check for update function. System will check conf and sys version and update accordingly.
-- Added System help check when in SimpleMode
-- Added Console help placeholders for SimpleMode
-- Added Full support for Python 3.8 - 3.8.x
-- Added username and password support.
-- Added Pin support.
-- Added Config will check enabled settings before starting
-- Added config smart learning config will disable any settings that conflict
-- Added system update check, if system does not match new version it will send an update link
-- Added Number search and lookup. WARNING - (This cost 0.5 cent per lookup | Numbers are stored in a file for keeping)
-- Added IP address/Hostname grabber in custom attacks
-- Added VoIP in custom attacks
-
-- Added New attack MadMax v1 - Sends both SMS, MMS as well as voice all at the same time to over load a system.
-- Added Emoji Attack v2 - This sends a list of emoji's to a user as well does it more efficiently than v1.
-- Added Music attack v1 - Send a YT or music link (Must be from a hosted site) to a number (Voice Attack)
-- Added IRL attack v1 - Send Real SMS attacks. This will pretend or mimic a human/person using NovaAI
-
-
-- Changed System interpreter from PyCharm to Atom
-- Changed How the crash system works. Now if no log is created NovaAI takes over.
-- Changed the system file check, no longer goes through 5 checks when creating config, using new
-  methods and functions on load it will locate and find any missing files and make accordingly.
-- Changed how config is crated, Now config is a static function within the create_files class.
-- Changed how settings page works.
-
-- Removed Emoji Attack v1.
-- Removed Python 2.7 Support.
-
-- Working on full auto update support.
-
-- Updated all need extensions
-
-Version: 3.1
-Release: N/A
-----------------
+Version: 3.0.1
+Release: 5/5/20
+---------------------------------------
 - System  | Complete overhaul of system.
 - System  | Redesign of Update Systems/text file.
-- System  | Fully changed to Atom editor.
+- System  | Full Support for local and non local development.
 - Added   | Full support for GitHub.
 - Added   | Full auto-update features.
-- Removed | Support for PyCharm.
+- Added   | Emoji Attack v2
+- Added   | Mad Max Attack
+- Added   | Crash Manager
+- Added   | Full Git Support
+- Added   | Nexus logo added to all prompts
+- Added   | Users can now select to go back to menu on custom attacks.
+- Added   | Search number now allows you to get back to main menu if you put the wrong number in.
+- Added   | Option added on all attack menus to go back instead of running attack.
+- Added   | Basic NovaAI integration, basic crash feature.
+
+- Changed | Search number is now located in placeholders.
+- Changed | LoadManager is now Nexus.py
+- Changed | Layout for System loading.
+- Changed | Nexus Logo.
+- Changed | Search number method | dynamically locates config file based off config listed path.
+- Changed | Menu design has been updated.
+- Changed | Closing the system now shows a more refined message.
+- Changed | When system is loading less information is displayed.
+- Changed | Both system and session UUID is displayed on load.
+
+- Fixed   | Search number would crash if invalid number was entered such as (1234567890)
+- Fixed   | Some return methods would bring users to wrong menus.
+- Fixed   | System closing on return to menus.
+- Fixed   | Search numbers txt file not spacing properly.
+- Fixed   | On load it will now display system UID and not session UID.
+- Fixed   | System was running window commands on Linux/Mac systems.
+
+- Working | Testing/Developing email sms attacks - more coming soon
+- Working | Force Login mode as well as Simple modes are out top priority in the coming updates
+- Working | A new way to use the local database. As of now its useless.
+- Working | Users and password with permission system. (Might not add)
+- Working | Reworking Loading System.
+- Working | ctrl + C program break out without errors.
+
+- Removed | System pin Support
+
+- Unknown | When searching a number selecting back lags the system. We are looking for a fix
+---------------------------------------
+[X] Version 3.1.0 will be the Last update to open room for some new projects [X]
+[*] This is a Stable Version [*]
+---------------------------------------
