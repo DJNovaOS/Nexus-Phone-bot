@@ -1,6 +1,6 @@
 import twilio
 from twilio.rest import Client
-from Placeholders import MainMenu_Icon, BetaMenu_Icon, VoiceMenu_Icon, SMSMenu_Icon, CustomMenu_Icon, CloseSys,SettingsMenu_Icon, ip, MenuSelection, CN, CAC,CD,SearchNumber
+from Placeholders import MainMenu_Icon, BetaMenu_Icon, VoiceMenu_Icon, SMSMenu_Icon, FunMenu_Icon, CloseSys,SettingsMenu_Icon, ip, MenuSelection, CN, CAC,CD,SearchNumber,Nexus,NexusPB
 from CrashManager import crash
 from emoji import emoji
 import random
@@ -14,9 +14,9 @@ config.read("C:/NovaOS/Modules/NexusPhoneBot/config.ini")
 
 
 class SelectMenu:
-    os.system('cls' if os.name == 'nt' else 'clear')
     def MainMenu(self):
-        print(MainMenu_Icon)
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(Nexus)
         print(MenuSelection["Main_1"])
         print(MenuSelection["Main_2"])
         print(MenuSelection["Main_3"])
@@ -24,7 +24,8 @@ class SelectMenu:
         print(MenuSelection["Main_5"])
         print(MenuSelection["Main_6"])
         print(MenuSelection["Main_quit"])
-        user = input("> ")
+        print("-----------------------------")
+        user = input("Nexus > ")
         if user == '1':
             SelectMenu().SMSMenu()
         elif user == '2':
@@ -32,23 +33,22 @@ class SelectMenu:
         elif user == '3':
             SelectMenu().FunMenu()
         elif user == '4':
-            print("\nBETA MENU SELECTED ?")
             SelectMenu().BetaMenu()
         elif user == '5':
             ACCOUNT_SID = config.get('Settings', 'Account-SID')
             AUTH_TOKEN = config.get('Settings', 'Auth-Token')
+            Log_Path = config.get('Settings', 'Log-Path')
             num = ''
-            Status = SearchNumber(num, ACCOUNT_SID, AUTH_TOKEN)
+            SearchNumber(num, ACCOUNT_SID, AUTH_TOKEN,Log_Path)
             time.sleep(3)
             SelectMenu().MainMenu()
         elif user == '6':
             SelectMenu().SettingsMenu()
-        elif user == '7':
-            SelectMenu().MainMenu()
         elif user in CloseSys:
             os.system('cls' if os.name == 'nt' else 'clear')
-            print("Thank you for using Nexus")
-            print("  [NovaOS Technology]")
+            print(NexusPB)
+            print("Closing System. Thank you for using Nexus Phone Bot")
+            print('       [A NovaOSTechnology Program]\n\n\n')
             sys.exit()
         else:
             print("Nexus > Not an Option")
@@ -58,11 +58,13 @@ class SelectMenu:
     def SMSMenu(self):
         os.system('cls' if os.name == 'nt' else 'clear')
         print(SMSMenu_Icon)
+        print("-----------------------------")
         print(MenuSelection["SMS_1"])
         print(MenuSelection["SMS_2"])
         print(MenuSelection["SMS_3"])
         print(MenuSelection["SMS_back"])
-        user = input("> ")
+        print("-----------------------------")
+        user = input("Nexus > ")
         if user == '1':
             SMS().SA(6, 10)
         elif user == '2':
@@ -83,11 +85,13 @@ class SelectMenu:
     def VoiceMenu(self):
         os.system('cls' if os.name == 'nt' else 'clear')
         print(VoiceMenu_Icon)
+        print("-----------------------------")
         print(MenuSelection["Voice_1"])
         print(MenuSelection["Voice_2"])
         print(MenuSelection["Voice_3"])
         print(MenuSelection["Voice_back"])
-        user = input("> ")
+        print("-----------------------------")
+        user = input("Nexus > ")
         if user == '1':
             Voice().VA(5, 10)
         elif user == '2':
@@ -105,21 +109,25 @@ class SelectMenu:
 
     def FunMenu(self):
         os.system('cls' if os.name == 'nt' else 'clear')
-        print(CustomMenu_Icon)
+        print(FunMenu_Icon)
+        print("-----------------------------")
         print(MenuSelection["Fun_1"])
         print(MenuSelection["Fun_2"])
         print(MenuSelection["Fun_3"])
         print(MenuSelection["Fun_4"])
         print(MenuSelection["Fun_back"])
-        user = input("> ")
+        print("-----------------------------")
+        user = input("Nexus > ")
         if user == '1':
             Fun().EA2(4,10)
         elif user == '2':
             Fun().MA(60,2)
         elif user == '3':
+            print("COMING SOON !")
+            time.sleep(1.5)
             SelectMenu().MainMenu()
         elif user == '4':
-            Fun().MMA()
+            Fun().MMA(5,4)
         elif user.lower() == 'b':
             os.system('cls' if os.name == 'nt' else 'clear')
             SelectMenu().MainMenu()
@@ -127,17 +135,19 @@ class SelectMenu:
             print("Nexus > Not an Option")
             time.sleep(1)
             os.system('cls' if os.name == 'nt' else 'clear')
-            SelectMenu().CustomMenu()
+            SelectMenu().FunMenu()
 
     def BetaMenu(self):
         os.system('cls' if os.name == 'nt' else 'clear')
         print(BetaMenu_Icon)
+        print("-----------------------------")
         print(MenuSelection["Beta_1"])
         print(MenuSelection["Beta_2"])
         print(MenuSelection["Beta_3"])
         print(MenuSelection["Beta_4"])
         print(MenuSelection["Beta_back"])
-        user = input("> ")
+        print("-----------------------------")
+        user = input("Nexus > ")
         if user == '1':
             SelectMenu().MainMenu()
         elif user == '2':
@@ -147,7 +157,6 @@ class SelectMenu:
         elif user == '4':
             SelectMenu().MainMenu()
         elif user.lower() == 'b':
-            os.system('cls' if os.name == 'nt' else 'clear')
             SelectMenu().MainMenu()
         else:
             print("Nexus > Not an Option")
@@ -158,21 +167,23 @@ class SelectMenu:
     def SettingsMenu(self):
         os.system('cls' if os.name == 'nt' else 'clear')
         print(SettingsMenu_Icon)
+        print("-----------------------------")
         print(MenuSelection["Settings_1"])
         print(MenuSelection["Settings_2"])
         print(MenuSelection["Settings_3"])
         print(MenuSelection["Settings_4"])
         print(MenuSelection["Settings_5"])
         print(MenuSelection["Settings_back"])
-        user = input("> ")
+        print("-----------------------------")
+        user = input("Nexus > ")
         if user == '1':
-            pass
+            SelectMenu().MainMenu()
         elif user == '2':
-            pass
+            SelectMenu().MainMenu()
         elif user == '3':
-            pass
+            SelectMenu().MainMenu()
         elif user == '4':
-            pass
+            SelectMenu().MainMenu()
         elif user.lower() == 'b':
             os.system('cls' if os.name == 'nt' else 'clear')
             SelectMenu().MainMenu()
@@ -191,14 +202,15 @@ class Voice:
         Attacker = config.get('Settings', 'Bot-Number')
         victim = ''
         victim = CN(victim)
-        print("Nexus > Get Ready to Attack | Number Valid")
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("Nexus > Get Ready to Attack | Settings Valid\n")
         print("<---------[Attack: Voice]-------->\n"
               f"[*] Bots Number    | ({Attacker})\n"
               f"[*] Victims Number | ({victim})\n"
               f"[*] Attack Delay   | ({delay}) seconds\n"
               f"[*] Attack Count   | ({attack_count}) Attacks\n"
               "<-------------------------------------->")
-        user = input("Nexus > Ready to Attack ?\n[Y] - Start Attack\n[N] - Change settings\n> ").lower()
+        user = input("Nexus > Ready to Attack ?\n[Y] - Start Attack\n[N] - Go Back\n> ").lower()
         if user == 'y':
             try:
                 client = Client(ACCOUNT_SID, AUTH_TOKEN)
@@ -220,7 +232,7 @@ class Voice:
             except Exception as error:
                 crash().Create_Log(error)
         elif user in CloseSys:
-            Voice().VA(5,10,0)
+            SelectMenu().VoiceMenu()
         else:
             print("Nexus > Not an Option")
             time.sleep(2.5)
@@ -240,7 +252,8 @@ class Voice:
         attack_count = CAC(attack_count)
         delay = CD(delay)
         Voice_link = input("Please enter a Voice Link: ")
-        print("Nexus > Get Ready to Attack | Number Valid")
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("Nexus > Get Ready to Attack | Settings Valid\n")
         print("<---------[Attack: Custom Voice]-------->\n"
               f"[*] Bots Number    | ({Attacker})\n"
               f"[*] Victims Number | ({victim})\n"
@@ -250,7 +263,7 @@ class Voice:
               f"[*] System IP      | ({ip})\n"
               f"[*] VoIP server    | (False/Null)\n"
               "<------------------------------------->")
-        user = input("Nexus > Start Attack ?\n[Y] - Start Attack\n[N] - Change Settings\n> ").lower()
+        user = input("Nexus > Start Attack ?\n[Y] - Start Attack\n[C] - Change Settings\n[B] - Go Back\n> ").lower()
         if user == 'y':
             os.system('cls' if os.name == 'nt' else 'clear')
             print(f"Nexus > Started Attack | {SysTime}")
@@ -273,7 +286,9 @@ class Voice:
             except Exception as error:
                 crash.Create_Log(error)
         elif user in CloseSys:
-            Voice().Custom(0)
+            SelectMenu().VoiceMenu()
+        elif user == 'c':
+            Voice().Custom()
         else:
             print("Nexus > Not an option")
             time.sleep(3)
@@ -281,21 +296,22 @@ class Voice:
 
 class SMS:
     def SA(self, delay, attack_count): #SMS Attack Basic (SA)
+        os.system('cls' if os.name == 'nt' else 'clear')
         SysTime = time.ctime()
         ACCOUNT_SID = config.get('Settings', 'Account-SID')
         AUTH_TOKEN = config.get('Settings', 'Auth-Token')
         Attacker = config.get('Settings', 'Bot-Number')
         victim = ''
         victim = CN(victim)
-
-        print("Nexus > Get Ready to Attack | Settings Valid")
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("Nexus > Get Ready to Attack | Settings Valid\n")
         print("<---------[Attack: SMS]-------->\n"
               f"[*] Bots Number    | ({Attacker})\n"
               f"[*] Victims Number | ({victim})\n"
               f"[*] Attack Delay   | ({delay}) seconds\n"
               f"[*] Attack Count   | ({attack_count}) Attacks\n"
-              "<------------------------------------->")
-        user = input("Nexus > Ready to Attack ?\n[Y] - Start Attack\n[N] - Change settings\n> ").lower()
+              "<------------------------------>")
+        user = input("Nexus > Ready to Attack ?\n[Y] - Start Attack\n[N] - Go Back\nNexus > ").lower()
         if user == 'y':
             try:
                 client = Client(ACCOUNT_SID, AUTH_TOKEN)
@@ -324,7 +340,7 @@ class SMS:
             SelectMenu().MainMenu()
 
         elif user in CloseSys:
-            Voice().Custom(0)
+            SelectMenu().SMSMenu()
         else:
             print("Nexus > Not an option")
             time.sleep(3)
@@ -335,6 +351,7 @@ class SMS:
 
 
     def Custom(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
         SysTime = time.ctime()
         ACCOUNT_SID = config.get('Settings', 'Account-SID')
         AUTH_TOKEN = config.get('Settings', 'Auth-Token')
@@ -346,18 +363,19 @@ class SMS:
         victim = CN(victim)
         attack_count = CAC(attack_count)
         delay = CD(delay)
-        message = input("Please enter a message: ")
-        print("Nexus > Get Ready to Attack | Number Valid")
+        message = input("Nexus > Please enter a message: ")
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("Nexus > Get Ready to Attack | Settings Valid\n")
         print("<---------[Attack: Custom SMS]-------->\n"
               f"[*] Bots Number    | ({Attacker})\n"
               f"[*] Victims Number | ({victim})\n"
               f"[*] Attack Delay   | ({delay}) seconds\n"
               f"[*] Attack Count   | ({attack_count}) Attacks\n"
-              f"[*] Message        | ({message})"
+              f"[*] Message        | ({message})\n"
               f"[*] System IP      | ({ip})\n"
               f"[*] VoIP server    | (False/Null)\n"
               "<------------------------------------->")
-        user = input("Nexus > Start Attack ?\n[Y] - Start Attack\n[N] - Change Settings\n> ").lower()
+        user = input("Nexus > Start Attack ?\n[Y] - Start Attack\n[C] - Change Settings\n[B] - Go Back\nNexus > ").lower()
         if user == 'y':
             os.system('cls' if os.name == 'nt' else 'clear')
             print(f"Nexus > Started Attack | {SysTime}")
@@ -380,7 +398,10 @@ class SMS:
             except Exception as error:
                 crash.Create_Log(error)
         elif user in CloseSys:
-            Voice().Custom(0)
+            SelectMenu().SMSMenu()
+        elif user == 'c':
+            os.system('cls' if os.name == 'nt' else 'clear')
+            SMS().Custom()
         else:
             print("Nexus > Not an option")
             time.sleep(3)
@@ -388,14 +409,15 @@ class SMS:
 
 class Fun:
     def EA2(self,delay, attack_count):
+        os.system('cls' if os.name == 'nt' else 'clear')
         SysTime = time.ctime()
         ACCOUNT_SID = config.get('Settings', 'Account-SID')
         AUTH_TOKEN = config.get('Settings', 'Auth-Token')
         Attacker = config.get('Settings', 'Bot-Number')
         victim = ''
         victim = CN(victim)
-
-        print("Nexus > Get Ready to Attack | Settings Valid")
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("Nexus > Get Ready to Attack | Settings Valid\n")
         print("<---------[Attack: Emoji v2]-------->\n"
               f"[*] Bots Number    | ({Attacker})\n"
               f"[*] Victims Number | ({victim})\n"
@@ -403,7 +425,7 @@ class Fun:
               f"[*] Attack Count   | ({attack_count}) Attacks\n"
               f"[*] Fist Message   | ({emoji[0]})\n"
               "<------------------------------------->")
-        user = input("Nexus > Ready to Attack ?\n[Y] - Start Attack\n[N] - Change settings\n> ").lower()
+        user = input("Nexus > Ready to Attack ?\n[Y] - Start Attack\n[N] - Go Back\n> ").lower()
         if user == 'y':
             os.system('cls' if os.name == 'nt' else 'clear')
             print(f"Nexus > Started Attack | {SysTime}")
@@ -427,7 +449,7 @@ class Fun:
                 crash.Create_Log(error)
 
         elif user in CloseSys:
-            Fun().EA2(4,10)
+            SelectMenu().FunMenu()
 
         else:
             print("Nexus > Not an option")
@@ -435,6 +457,7 @@ class Fun:
             SelectMenu().FunMenu()
 
     def MA(self, delay, attack_count): #Music Attack - (MA)
+        os.system('cls' if os.name == 'nt' else 'clear')
         SysTime = time.ctime()
         ACCOUNT_SID = config.get('Settings', 'Account-SID')
         AUTH_TOKEN = config.get('Settings', 'Auth-Token')
@@ -442,7 +465,8 @@ class Fun:
         Music_link = config.get('Settings', 'Music-Link')
         victim = ''
         victim = CN(victim)
-        print("Nexus > Get Ready to Attack | Number Valid")
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("Nexus > Get Ready to Attack | Settings Valid\n")
         print("<---------[Attack: Music Voice]-------->\n"
               f"[*] Bots Number    | ({Attacker})\n"
               f"[*] Victims Number | ({victim})\n"
@@ -450,7 +474,7 @@ class Fun:
               f"[*] Attack Count   | ({attack_count}) Attacks\n"
               f"[*] Music Link     | ({Music_link})\n"
               "<-------------------------------------->")
-        user = input("Nexus > Ready to Attack ?\n[Y] - Start Attack\n[N] - Change settings\n> ").lower()
+        user = input("Nexus > Ready to Attack ?\n[Y] - Start Attack\n[C] - Change settings\n[B] - Go Back\nNexus > ").lower()
         if user == 'y':
             try:
                 client = Client(ACCOUNT_SID, AUTH_TOKEN)
@@ -473,15 +497,18 @@ class Fun:
             except Exception as error:
                 crash().Create_Log(error)
         elif user in CloseSys:
+            SelectMenu().FunMenu()
+        elif user == 'c':
             Fun().MA(60,3)
         else:
             print("Nexus > Not an Option")
             time.sleep(2.5)
             os.system('cls' if os.name == 'nt' else 'clear')
-            SelectMenu().VoiceMenu()
+            SelectMenu().FunMenu()
 
 
     def MMA(self, delay, attack_count): #Mad Max Attack - (MMA)
+        os.system('cls' if os.name == 'nt' else 'clear')
         SysTime = time.ctime()
         ACCOUNT_SID = config.get('Settings', 'Account-SID')
         AUTH_TOKEN = config.get('Settings', 'Auth-Token')
@@ -491,7 +518,8 @@ class Fun:
         victim = ''
         victim = CN(victim)
         message = 'Your phone has been targeted by Nexus 3.0.1 🤬'
-        print("Nexus > Get Ready to Attack | Number Valid")
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("Nexus > Get Ready to Attack | Settings Valid\n")
         print("<------------[Attack: Mad Max]----------->\n"
               f"[*] Bots Number    | ({Attacker})\n"
               f"[*] Victims Number | ({victim})\n"
@@ -505,7 +533,7 @@ class Fun:
               f"[*] System Message | ({message})\n"
               f"[*] Emoji message  | ({emoji[0]})\n"
               "<----------------------------------------->")
-        user = input("Nexus > Ready to Attack ?\n[Y] - Start Attack\n[N] - Change settings\n> ").lower()
+        user = input("Nexus > Ready to Attack ?\n[Y] - Start Attack\n[C] - Change settings\n[B] - Go Back\nNexus > ").lower()
         if user == 'y':
             try:
                 client = Client(ACCOUNT_SID, AUTH_TOKEN)
@@ -530,6 +558,8 @@ class Fun:
             except Exception as error:
                 crash().Create_Log(error)
         elif user in CloseSys:
+            SelectMenu().FunMenu()
+        elif user == 'c':
             Fun().MMA(5,4)
         else:
             print("Nexus > Not an Option")

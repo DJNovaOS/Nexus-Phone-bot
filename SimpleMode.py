@@ -1,8 +1,7 @@
 from Placeholders import check_help
 from Placeholders import console_help
 
-
-
+#Start Development for version 3.0.4
 class SimpleMode():
 
     def Console(self):

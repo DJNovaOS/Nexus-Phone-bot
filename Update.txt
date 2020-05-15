@@ -11,14 +11,47 @@ Release: N/A
 ---------------------------------------
 - System  | Complete overhaul of system.
 - System  | Redesign of Update Systems/text file.
-- System  | Fully changed to Atom editor.
+- System  | Full Support for local and non local development.
 - Added   | Full support for GitHub.
 - Added   | Full auto-update features.
 - Added   | Emoji Attack v2
 - Added   | Mad Max Attack
 - Added   | Crash Manager
 - Added   | Full Git Support
-- Changed | Search number is now located in placeholders
-- Changed | LoadManager is now Nexus.py
+- Added   | Nexus logo added to all prompts
+- Added   | Users can now select to go back to menu on custom attacks.
+- Added   | Search number now allows you to get back to main menu if you put the wrong number in.
+- Added   | Option added on all attack menus to go back instead of running attack.
+- Added   | Basic NovaAI integration, basic crash feature.
 
+- Changed | Search number is now located in placeholders.
+- Changed | LoadManager is now Nexus.py
+- Changed | Layout for System loading.
+- Changed | Nexus Logo.
+- Changed | Search number method | dynamically locates config file based off config listed path.
+- Changed | Menu design has been updated.
+- Changed | Closing the system now shows a more refined message.
+- Changed | When system is loading less information is displayed.
+- Changed | Both system and session UUID is displayed on load.
+
+- Fixed   | Search number would crash if invalid number was entered such as (1234567890)
+- Fixed   | Some return methods would bring users to wrong menus.
+- Fixed   | System closing on return to menus.
+- Fixed   | Search numbers txt file not spacing properly.
+- Fixed   | On load it will now display system UID and not session UID.
+- Fixed   | System was running window commands on Linux/Mac systems.
+
+- Working | Testing/Developing email sms attacks - more coming soon
+- Working | Force Login mode as well as Simple modes are out top priority in the coming updates
+- Working | A new way to use the local database. As of now its useless.
+- Working | Users and password with permission system. (Might not add)
+- Working | Reworking Loading System.
+- Working | ctrl + C program break out without errors.
+
+- Removed | System pin Support
+
+- Unknown | When searching a number selecting back lags the system. We are looking for a fix
+---------------------------------------
+[X] Version 3.1.0 will be the Last update to open room for some new projects [X]
 [*] More updates to follow this is not the full stable version of 3.0.1 [*]
+---------------------------------------
