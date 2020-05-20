@@ -1,6 +1,6 @@
 import twilio
 from twilio.rest import Client
-from Placeholders import MainMenu_Icon, BetaMenu_Icon, VoiceMenu_Icon, SMSMenu_Icon, FunMenu_Icon, CloseSys,SettingsMenu_Icon, ip, MenuSelection, CN, CAC,CD,SearchNumber,Nexus,NexusPB
+from Placeholders import BetaMenu_Icon, VoiceMenu_Icon, SMSMenu_Icon, FunMenu_Icon, CloseSys,SettingsMenu_Icon, ip, MenuSelection, CN, CAC,CD,SearchNumber,Nexus,NexusPB
 from CrashManager import crash
 from emoji import emoji
 import random

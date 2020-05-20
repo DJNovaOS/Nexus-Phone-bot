@@ -13,22 +13,19 @@ check_version = platform.version()
 
 support = "www.NovaOSTechnology.com"
 Referral = "www.twilio.com/referral/bFkIkX"
-config_version = '3.0.1'
-System_version = '3.0.1'
+Version = '3.0.2'
 get_name = socket.gethostname()
 ip = socket.gethostbyname(get_name)
 Copy_right = ['Copyright © 2020 NovaOS',
               'Copyright © 2020 NovaOS Technology']
 
-auto_update = "https://raw.githubusercontent.com/DJNovaTech/Nexus-Phone-bot/Stable/Version.txt"
+auto_update = "https://raw.githubusercontent.com/DJNovaTech/Nexus-Phone-bot/3.0.2/Version.txt"
 SysTime = time.ctime().split(" ")
 
-file_path = "C:/NovaOS/Modules/NexusPhoneBot"
-conf_path = "C:/NovaOS/Modules/NexusPhoneBot/config.ini"
-database_path = "C:/NovaOS/Modules/NexusPhoneBot/database"
-log = "C:/NovaOS/Modules/NexusPhoneBot/Logs/Log.txt"
-img_path = "C:/NovaOS/Modules/NexusPhoneBot/img"
-database_file_path = "C:/NovaOS/Modules/NexusPhoneBot/database/System.db"
+file_path = ['C:/NovaOS/Modules/NexusPhoneBot/img',
+             'C:/NovaOS/Modules/NexusPhoneBot/config.ini',
+             'C:/NovaOS/Modules/NexusPhoneBot/System.db']
+
 CloseSys = ['e', 'EXIT', 'exit', 'E', 'exi', 'end', 'exi', 'b', 'B', 'BACK', 'n', 'N','CLOSE','close','clos']
 
 NetworkError = ['<urlopen error [Errno 11001] getaddrinfo failed>']
@@ -71,13 +68,6 @@ MenuSelection = {
     "Beta_4": "[4] - N/A",
     "Beta_back": "[B] - Back"}
 
-system_path = [
-    os.path.exists(file_path),
-    os.path.exists(conf_path),
-    os.path.exists(database_path),
-    os.path.exists(database_file_path),
-    os.path.exists('C:/Nova/Modules/NovaPhoneBot/Logs'),
-    os.path.exists(img_path)]
 
 check_help = ['h', 'Help', 'help', 'HELP', 'H']
 
@@ -107,7 +97,7 @@ NexusPB = f"""
        -----------------------------                               
      [#] Developer | NovaOS Technology
      [#] Creator   | DJNovaTech
-     [#] Version   | {System_version}
+     [#] Version   | {Version}
      
      [{Copy_right[1]}]
 
@@ -127,7 +117,7 @@ crash_logo = f"""
         -------------------------------------------------
         [*] (C:/Nova/Modules/NovaPhoneBot/Logs) 
         [*] Support | (NovaOSTechnology.com/support)
-        [*] Version | {System_version}
+        [*] Version | {Version}
         [*] {SysTime[0]} | {SysTime[1]} {SysTime[3]} | {SysTime[4]}
 """
 
@@ -145,12 +135,12 @@ NovaAI = f"""
                Support to help fix this bug.
         (Please copy and paste your config to pastebin)
         -------------------------------------------------
-        [*] {conf_path} | ({system_path[1]}) 
+        [*] {file_path[1]} | ({Version[1]}) 
         [*] Support | (NovaOSTechnology.com/support)
-        [*] Version | {System_version}
+        [*] Version | {Version}
         [*] OS: {check_os}
         [*] UUID: N/A
-        [*] Conf Version: {config_version}
+        [*] Conf Version: {Version}
         [*] {SysTime[0]} | {SysTime[1]} {SysTime[3]} | {SysTime[4]}
         [*] Log-Path: 'C:/Nova/Modules/NovaPhoneBot/Logs'
         [*] IP Address: {ip}
@@ -158,12 +148,6 @@ NovaAI = f"""
         [*] voIP: False/Disabled
 """
 
-MainMenu_Icon = """
-  __  __      _        __  __              
- |  \/  |__ _(_)_ _   |  \/  |___ _ _ _  _ 
- | |\/| / _` | | ' \  | |\/| / -_) ' \ || |
- |_|  |_\__,_|_|_||_| |_|  |_\___|_||_\_,_|
-"""
 SMSMenu_Icon = """
   ___ __  __ ___   __  __              
  / __|  \/  / __| |  \/  |___ _ _ _  _ 
@@ -302,6 +286,5 @@ def SearchNumber(num, ACCOUNT_SID, AUTH_TOKEN, log):
                     os.system('cls' if os.name == 'nt' else 'clear')
                     print("Nexus > Not an option.")
                     SearchNumber(num,ACCOUNT_SID,AUTH_TOKEN,log)
-
         except Exception as error:
             print(error)
