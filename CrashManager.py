@@ -1,6 +1,5 @@
 import time
 import os
-import datetime
 from Placeholders import crash_logo, NovaAI
 import configparser
 import sys
@@ -20,8 +19,6 @@ class crash:
                 os.makedirs(str(LogPath))
         except Exception:
             print(NovaAI)
-
-    
         try:
             with open(f"{LogPath}/Log.txt", 'a') as log:
                 print(crash_logo)
