@@ -12,6 +12,7 @@ from urllib import request
 
 class system_loading:
     def load(self):
+            print("4.0 Test")
             print("Nexus > System successfully loaded | Running ... ")
             os.system('cls' if os.name == 'nt' else 'clear')
             SelectMenu().MainMenu()
